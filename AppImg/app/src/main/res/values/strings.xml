@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AppImg</string>
+
+    //main
+    <string name="tv_img"> THƯ VIỆN ẢNH </string>
+    //bar
+    <string name="title_img"> Ảnh </string>
+    <string name="title_album"> Album </string>
+    <string name="title_time"> Time Line </string>
+</resources>
