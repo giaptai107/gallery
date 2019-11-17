@@ -33,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
+            Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.nav_img:
                     toolbar.setTitle("Ảnh");
+                    fragment = new ImgFragment();
                     return true;
                 case R.id.nav_album:
                     toolbar.setTitle("Album");
