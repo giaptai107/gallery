@@ -1,6 +1,7 @@
 package com.example.appimg;
 
         import android.content.Context;
+        import android.content.Intent;
         import android.graphics.Bitmap;
         import android.view.LayoutInflater;
         import android.view.View;
@@ -38,8 +39,13 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ViewHolder> {
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "" +
-                        galleryList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "" +
+//                        galleryList.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, Full_img.class);
+                intent.putExtra("name",  galleryList.get(position).getTitle());
+                intent.putExtra("img", galleryList.get(position).getPath());
+                context.startActivity(intent);
+
             }
         });
     }
