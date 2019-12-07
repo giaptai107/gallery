@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<Cell> allFilesPaths;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
         && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
         != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
+
         }
         else {
             //show the images
+            showImage();
         }
     }
 
     private void showImage(){
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Images/";
         allFilesPaths = new ArrayList<>();
-        allFilesPaths = listAllFiles(path);
-
+        allFilesPaths = listAllFiles(Environment.getExternalStorageDirectory());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.gallery);
         recyclerView.setHasFixedSize(true);
 
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Cell> cells = prepareData();
         ImgAdapter imgAdapter = new ImgAdapter(getApplicationContext(), cells);
         recyclerView.setAdapter(imgAdapter);
+        String a = String.valueOf(imgAdapter.getItemCount());
+        Toast.makeText(this, a , Toast.LENGTH_SHORT).show();
     }
 
     //prepare the images for the List
@@ -64,18 +67,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //load all files from on the screen
-    private List<Cell> listAllFiles(String pathName){
-        List<Cell> allFiles = new ArrayList<>();
-        File file = new File(pathName);
-        File[] files = file.listFiles();
-        if(file != null){
-            for (File f: files){
+    private ArrayList<Cell> listAllFiles(File fileName){
+        ArrayList<Cell> allFiles = new ArrayList<>();
+        File[] files = fileName.listFiles();
+            for (int i = 0; i <files.length; i++) {
                 Cell cell = new Cell();
-                cell.setTitle(f.getName());
-                cell.setPath(f.getAbsolutePath());
-                allFiles.add(cell);
+                if(files[i].isDirectory()){
+                    allFiles.addAll(listAllFiles(files[i]));
+                }
+                else {
+                    if(files[i].getName().endsWith(".jpg")){
+                        cell.setTitle(files[i].getName());
+                        cell.setPath(files[i].getAbsolutePath());
+                        allFiles.add(cell);
+                    }
+                }
             }
-        }
         return allFiles;
     }
 
