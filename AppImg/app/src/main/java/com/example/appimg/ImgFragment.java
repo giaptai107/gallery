@@ -110,6 +110,7 @@ public class ImgFragment extends Fragment {
                 }
             }
         }
+
         return allFiles;
     }
     @Override
@@ -124,6 +125,7 @@ public class ImgFragment extends Fragment {
             else {
                 Toast.makeText(getContext(), "Permission not granted!", Toast.LENGTH_SHORT).show();
                 getActivity().finish();
+
             }
         }
     }
